@@ -1,0 +1,29 @@
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
+const Product = () => {
+    const [product,setProduct] = useState({})
+    const {id} = useParams()
+    
+    useEffect(()=>{
+   
+        const fetchProduct = async ()=>{
+            if(id){
+                let res = await fetch(`http://localhost:8080/products/${id}`)
+                let data = await res.json()
+                setProduct(data)
+            }
+        }
+        fetchProduct()
+    },[id])
+
+    console.log(id)
+  return (
+    <div>
+      productId :{id}
+      <div>{ `Product name ${product.name}, This is product price ${product.price}`}</div>
+    </div>
+  )
+}
+
+export default Product
